@@ -13,49 +13,29 @@ public class CreationOfLL{
         }
     }
  
-
-    public static void addAtHead(int data){
+    public static void add(int data){
 
         //1. created new node
-        Node temp = new Node(data);
+        Node newNode = new Node(data);
 
         if(head == null) { // Edge case (Empty List)
 
             //2. point head and tail at same
-            head = tail = temp;
-
-        }else{
-
-            //2. Connect this node to head
-            temp.next = head;
-            //3. Update new head
-            head =  temp;
-
-        }
-    }
-
-
-    public static void addAtTail(int data){
-
-        //1. created new node
-        Node temp = new Node(data);
-
-        if(head == null) { // Edge case (Empty List)
-
-            //2. point head and tail at same
-            head = tail = temp;
+            head = tail = newNode;
+            return;
 
         }else{
 
             //2. Connect tail node to temp
-            tail.next = temp;
+            tail.next = newNode;
             //3. Update new tail
-            tail =  temp;
+            tail =  newNode;
+            return;
 
         }
     }
 
-    public static void addAtAny(int position ,int data){
+    public static void addAt(int position ,int data){
 
         int length = getLength();
 
@@ -67,41 +47,161 @@ public class CreationOfLL{
         //* Case 1: Empty List
         if(head == null) { 
 
-            Node temp = new Node(data);
-            head = tail = temp;
+            Node newNode = new Node(data);
+            head = tail = newNode;
+            return;
 
         }
 
         //* Case 2: Insert at head
         else if(position == 1){
 
-            addAtHead(data);
+            //1. Create new Node
+            Node newNode = new Node(data);
+            //2. Connect this node to head
+            newNode.next = head;
+            //3. Update new head
+            head =  newNode;
+            return;
 
         }
         
         //* Case 3: Insert at tail
         else if(position == length+1){
 
-            addAtTail(data);
+            add(data);
+            return;
 
         }
         
         //* Case 4: Insert between head & tail
         else{
 
-            Node temp = new Node(data); // Create node
+            Node newNode = new Node(data); // Create node
             Node pre = null;            // Create previous node
             Node curr = head;           // Current node
 
+            //1. Traversing at give position
             while (position > 1) {
                 pre = curr;
                 curr = curr.next;
                 position--;
             }
 
-            //Connect temp node with correct position
-            pre.next = temp;
-            temp.next = curr;
+            //2. Connect pre node with new node
+            pre.next = newNode;
+
+            //3. Connect new node with curr node
+            newNode.next = curr;
+            return;
+        }
+    }
+
+    public static void remove(){
+    
+        if(head == null) { // Edge case (Empty List)
+
+            System.out.println("Empty List");
+            return;
+
+        }
+
+        //* Case1: Single element
+        if(head == tail){
+
+            // Nullify head & tail
+            head = tail = null;
+            return;
+        }
+
+        //* Case2: Delete at tail
+        else{
+
+            Node curr = head;           // Current node
+
+            //1. Traverse until current node pointing to tail
+            while (curr.next != tail) {
+                curr = curr.next;
+            }
+
+            //2. Nullify Current node
+            curr.next = null;
+
+            //3. Update tail
+            tail = curr;
+            return;
+
+        }
+    }
+
+    public static void removeAt(int position){
+
+        int length = getLength();
+
+        if(position < 1 || position > length){ // Edge case (Invalid position)
+            System.out.println("Enter correct position");
+            return;
+        }
+
+        //* Case 1: Empty List
+        if(head == null) { 
+
+            System.out.println("Empty List");
+            return;
+
+        }
+
+        //* Case 2: Single Element
+        else if(head == tail && position ==1) { 
+
+            //Nullify head & tail
+            head = tail = null;
+            return;
+
+        }
+
+        //* Case 3: delete at head
+        else if(position == 1){
+
+            //1. Create new node and set to head
+            Node tempNode = head;
+
+            //2. Update head postion
+            head = head.next;
+
+            //3. delete 1st node
+            tempNode.next = null;
+            return;
+
+        }
+        
+        //* Case 4: delete at tail
+        else if(position == length){
+
+            remove();
+            return;
+
+        }
+        
+        //* Case 5: delete between head & tail
+        else{
+
+            Node pre = null;            // Create previous node
+            Node curr = head;           // Current node
+
+            //1. Traverse at give postion
+            while (position > 1) {
+                pre = curr;
+                curr = curr.next;
+                position--;
+            }
+
+            //2. Connect pre node to current next node
+            pre.next = curr.next;
+
+            //3. Nullify the current node
+            curr.next = null;
+            return;
 
         }
     }
@@ -111,11 +211,19 @@ public class CreationOfLL{
         // *! Always use temp node for traverse the node, don't touch original node
         Node temp = head;
 
-        while (temp != null) {
-            System.out.print(temp.data + " ");
-            temp = temp.next;
+        if(temp == null){
+            System.out.println("List is empty");
+            return;
+        }else{
+
+            while (temp != null) {
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            }
+            System.out.println();
+            return;
         }
-        System.out.println();
+        
     }
 
     public static int getLength(){
@@ -133,22 +241,29 @@ public class CreationOfLL{
     
     public static void main(String[] args) {
 
-        
+        add(20);
+        add(30);
+        add(40);
+        printList(); // Output: 20 30 40
 
-        // Adding new node (defult)
-        addAtTail( 20);
-        addAtTail( 30);
-        addAtTail( 40);
-        addAtTail( 60);
-        printList();
+        addAt(1, 10);
+        printList(); // Output: 10 20 30 40
 
-        //After adding new node at head
-        addAtHead(10);
-        printList();
+        addAt(3, 25);
+        printList(); // Output: 10 20 25 30 40
 
-        //After adding new node at Any position
-        addAtAny(-1, 12);
-        printList();
+        removeAt(1);
+        printList(); // Output: 20 25 30 40
+
+        removeAt(4);
+        printList(); // Output: 20 25 30
+
+        removeAt(2);
+        printList(); // Output: 20 30
+
+        remove();
+        printList(); // Output: 20
+
     }
 
 }
