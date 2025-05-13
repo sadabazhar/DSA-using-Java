@@ -37,7 +37,7 @@ public class CreationOfSinglyList{
 
     public static void addAt(int position ,int data){
 
-        int length = getLength();
+        int length = getLength(head);
 
         if(position < 1 || position > length+1){ // Edge case (Invalid position)
             System.out.println("Enter correct position");
@@ -136,7 +136,7 @@ public class CreationOfSinglyList{
 
     public static void removeAt(int position){
 
-        int length = getLength();
+        int length = getLength(head);
 
         if(position < 1 || position > length){ // Edge case (Invalid position)
             System.out.println("Enter correct position");
@@ -207,7 +207,7 @@ public class CreationOfSinglyList{
     }
     
 
-    public static void printList(){
+    public static void printList(Node head){
         // *! Always use temp node for traverse the node, don't touch original node
         Node temp = head;
 
@@ -226,7 +226,7 @@ public class CreationOfSinglyList{
         
     }
 
-    public static int getLength(){
+    public static int getLength(Node head){
         // *! Always use temp node to traverse the node, don't touch original node
         Node temp = head;
         int length = 0;
@@ -244,25 +244,25 @@ public class CreationOfSinglyList{
         add(20);
         add(30);
         add(40);
-        printList(); // Output: 20 30 40
+        printList(head); // Output: 20 30 40
 
         addAt(1, 10);
-        printList(); // Output: 10 20 30 40
+        printList(head); // Output: 10 20 30 40
 
         addAt(3, 25);
-        printList(); // Output: 10 20 25 30 40
+        printList(head); // Output: 10 20 25 30 40
 
         removeAt(1);
-        printList(); // Output: 20 25 30 40
+        printList(head); // Output: 20 25 30 40
 
         removeAt(4);
-        printList(); // Output: 20 25 30
+        printList(head); // Output: 20 25 30
 
         removeAt(2);
-        printList(); // Output: 20 30
+        printList(head); // Output: 20 30
 
         remove();
-        printList(); // Output: 20
+        printList(head); // Output: 20
 
     }
 

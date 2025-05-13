@@ -29,8 +29,8 @@ public class ReverseList extends CreationOfSinglyList {
         add(20);
         add(30);
         add(40);
-        printList();
+        printList(head);
         head = reverseList(head);
-        printList();
+        printList(head);
     }
 }
