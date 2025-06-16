@@ -1,9 +1,35 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Problem statement: 
+ *  You are given the root of a binary tree and an integer targetSum.
+ *  You need to find all root-to-leaf paths in the tree where the sum of all the node values in the path is equal to targetSum.
+ *  Return those paths as a list of lists.
+
+ * Approach:
+
+    1. Use DFS (Depth First Search) to go through the tree.
+
+    2. Maintain:
+
+        - a sum to store the sum of values in that path,
+
+        - a tempList to store the current path
+
+    3. When we reach a leaf node, we:
+
+        - Check if the sum equals the targetSum.
+
+        - If yes, add a copy of that path to the final answer.
+
+    4. Use backtracking to remove the last node when we go back up — this avoids using the same list for different paths.
+
+
+*/
 
 public class PathSum2 extends BinaryTree{
-    
+
     public static void pathSum(Node root, int targetSum, int sum, List<List<Integer>> finalList, List<Integer> tempList) {
 
         // If current node is null, just return
